@@ -10,6 +10,7 @@ Om deze succesvol te kunnen gebruiken moet volgende libraries zeker aanwezig zij
 Het gebruikte besturingssysteem is Linux Ubuntu 16.04 
 
 Wat is waar terug te vinden?
+
 	- EnvironmentWoB --> de gebruikte browser taken, nodig voor OpenAI
 	
 	- Garfield --> de agent voor de eerste, eenvoudige taak die opgelost moest worden
