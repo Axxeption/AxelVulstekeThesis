@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Click Test Task</title>
+<!-- stylesheets -->
+<link rel="stylesheet" type="text/css" href="../core/core.css">
+<!-- JS -->
+<script src="../core/core.js"></script>
+<script src="../core/d3.v3.min.js"></script>
+<script src="../common/ui_utils.js"></script>
+
+<style>
+#subbtn { width: 70px; height: 70px; }
+#subbtn2 { width: 70px; height: 70px; }
+</style>
+
+<script>
+var genProblem = function() {
+  var X1 = core.randi(0, 100); var Y1 = core.randi(0, 100) + 50;
+  var btn = d3.select('#subbtn');
+  btn.attr('style', 'position:absolute; left:'+X1+'px; top:'+Y1+'px');
+  btn.on('click', function(){ core.endEpisode(1.0, false); });
+
+  var X2 = core.randi(0, 100); var Y2 = core.randi(0, 100) + 50;
+  var btn = d3.select('#subbtn2');
+  btn.attr('style', 'position:absolute; left:'+X2+'px; top:'+Y2+'px');
+  btn.on('click', function(){ core.endEpisode(-1.0, false); });
+  while((X1 < X2 + 70) && (X1 + 70 > X2) && (Y1 < Y2 + 70) && (Y1 + 70 > Y2)){
+    X1 = core.randi(0, 100); var Y1 = core.randi(0, 100) + 50;
+    btn = d3.select('#subbtn');
+    btn.attr('style', 'position:absolute; left:'+X1+'px; top:'+Y1+'px');
+    btn.on('click', function(){ core.endEpisode(1.0, false); });
+
+    X2 = core.randi(0, 100); var Y2 = core.randi(0, 100) + 50;
+    btn = d3.select('#subbtn2');
+    btn.attr('style', 'position:absolute; left:'+X2+'px; top:'+Y2+'px');
+    btn.on('click', function(){ core.endEpisode(-1.0, false); });
+  }
+}
+
+window.onload = function() {
+  genProblem(); // start things off on load immediately
+  core.startEpisode();
+}
+</script>
+</head>
+<body>
+<div id="wrap">
+  <div id="query">Click button house.</div>
+  <div id="area">
+    <button id="subbtn">house</button>
+    <button id="subbtn2">marker</button>
+  </div>
+</div>
+</body>
+</html>

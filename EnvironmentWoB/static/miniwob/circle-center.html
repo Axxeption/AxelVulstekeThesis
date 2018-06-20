@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>RL test</title>
+<!-- stylesheets -->
+<link rel="stylesheet" type="text/css" href="../core/core2.css">
+<!-- JS -->
+<script src="../core/core3.js"></script>
+<script src="../core/d3.v3.min.js"></script>
+<script src="../common/ui_utils.js"></script>
+
+<style>
+#subbtn { width: 50px; height: 50px; }
+#subbtn2 { width: 50px; height: 50px; }
+</style>
+
+<script>
+let meat = ['Salmon', 'Sheep', 'Bacon']
+let potatoes = ['Chips' , 'Potato', 'Pasta']
+let okWord = " Appetizing"
+let number =0 
+var x = 0
+function change_text(knop) {
+  if(document.getElementById('myCheckbox' + knop).checked == false){
+      document.getElementById('myCheckbox' + knop).checked = true;
+  }else{
+      document.getElementById('myCheckbox' + knop).checked = false;
+  }
+  var button = document.getElementById(knop);
+  if(x == 0){
+    if (button.innerHTML === meat[knop-1]) {
+      number+=1;
+      button.innerHTML = okWord;
+    }
+    else {
+      button.innerHTML = meat[knop-1];
+    }
+  }else{
+    if (button.innerHTML === potatoes[knop-1]) {
+      number+=1;
+      button.innerHTML = okWord;
+    }
+    else {
+      button.innerHTML = potatoes[knop-1];
+    }
+  }
+}
+function badreward(){
+  //reset with bad reward -1
+  core.endEpisode(-1.0, false); 
+}
+function goodreward(){
+//reset with good reward, max =1 --> in 3 steps
+  number+=1;
+  reward = 3/number;
+  var button1 = document.getElementById('1');
+  var button2 = document.getElementById('2');
+  var button3 = document.getElementById('3');
+  if (button1.innerHTML === okWord && button2.innerHTML === meat[1] && button3.innerHTML === okWord) {
+      core.endEpisode(reward, false)
+      }
+    else{
+        core.endEpisode(-1, false)
+    }
+}
+function reset(){
+  number = 0;
+  for (var i = 1; i < 4; i++) {
+      var button = document.getElementById(i);
+      button.innerHTML = meat[i-1];
+      x=0
+      document.getElementById('myCheckbox' + i).checked = false;
+  }
+}
+
+window.onload = function() {
+  console.log("start in html");
+  reset();
+  core.startEpisode();
+}
+</script>
+</head>
+<body>
+<div id="wrap">
+  <div id="query">Choose what Garfield likes!</div>
+    <div id="area">
+    <input type=checkbox id=myCheckbox1>
+      <label id="1" onclick="change_text('1')" style="text-decoration:none; font-size: 34px; color: black">
+        uncheck
+      </label>
+    </input>
+    <br>
+     <input type=checkbox id=myCheckbox2>
+      <label id="2" onclick="change_text('2')" style="text-decoration:none; font-size: 34px; color: black">
+        uncheck
+      </label>
+    </input>
+    <br>
+     <input type=checkbox id=myCheckbox3>
+      <label id="3" onclick="change_text('3')" style="text-decoration:none; font-size: 34px; color: black">
+        uncheck
+      </label>
+    </div>
+    <button id="4" onclick="badreward()" href='javascript: toggle()' style="text-decoration:none; font-size: 34px; color: black">
+      back
+     </button>
+     <br>
+      <button id="5" onclick="goodreward()" href='javascript: toggle()' style="text-decoration:none; font-size: 34px; color: black">
+      next
+     </button>
+  </div>
+</div>
+</body>
+</html>

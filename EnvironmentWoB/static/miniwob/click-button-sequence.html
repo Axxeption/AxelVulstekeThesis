@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>RL test</title>
+<!-- stylesheets -->
+<link rel="stylesheet" type="text/css" href="../core/core2.css">
+<!-- JS -->
+<script src="../core/core2.js"></script>
+<script src="../core/d3.v3.min.js"></script>
+<script src="../common/ui_utils.js"></script>
+
+<style>
+#subbtn { width: 50px; height: 50px; }
+#subbtn2 { width: 50px; height: 50px; }
+</style>
+
+<script>
+let number =0 
+function change_text(knop) {
+  var button = document.getElementById(knop);
+  if (button.innerHTML === "marker") {
+    number+=1;
+    button.innerHTML = "house";
+  }
+  else {
+    button.innerHTML = "marker";
+  }
+}
+function badreward(){
+  //reset with bad reward -1
+  core.endEpisode(-1.0, false); 
+}
+function goodreward(){
+//reset with good reward, max =1 --> in 3 steps
+  number+=1;
+  reward = 3/number;
+  var button1 = document.getElementById('1');
+  var button2 = document.getElementById('2');
+  var button3 = document.getElementById('3');
+  if (button1.innerHTML === "house" && button2.innerHTML === "marker" && button3.innerHTML === "house") {
+    core.endEpisode(reward, false)
+    }
+  else{
+      core.endEpisode(-1, false)
+  }
+}
+function reset(){
+  number = 0;
+  for (var i = 1; i < 4; i++) {
+      var button = document.getElementById(i);
+      button.innerHTML = "marker";
+  }
+}
+
+window.onload = function() {
+  console.log("start in html");
+  reset();
+  core.startEpisode();
+}
+</script>
+</head>
+<body>
+<div id="wrap">
+  <div id="query">Do sequence of things</div>
+    <div id="area">
+    <input type=checkbox id=myCheckbox>
+    	<label id="1" onclick="change_text('1')" style="text-decoration:none; font-size: 34px; color: black">
+    		uncheck
+    	</label>
+    </input>
+    <br>
+     <input type=checkbox id=myCheckbox>
+    	<label id="2" onclick="change_text('2')" style="text-decoration:none; font-size: 34px; color: black">
+    		uncheck
+    	</label>
+    </input>
+    <br>
+     <input type=checkbox id=myCheckbox>
+    	<label id="3" onclick="change_text('3')" style="text-decoration:none; font-size: 34px; color: black">
+    		uncheck
+    	</label>
+    </div>
+    <button id="4" onclick="badreward()" href='javascript: toggle()' style="text-decoration:none; font-size: 34px; color: black">
+      back
+     </button>
+     <br>
+      <button id="5" onclick="goodreward()" href='javascript: toggle()' style="text-decoration:none; font-size: 34px; color: black">
+      next
+     </button>
+  </div>
+</div>
+</body>
+</html>
