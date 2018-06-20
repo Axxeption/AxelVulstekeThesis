@@ -19,4 +19,4 @@ Wat is waar terug te vinden?
 	
 	- GafrieldRobuust --> source code om de robuustheid van de voorgestelde agents te onderzoeken
 	
-	- Pong --> source code die gebruikt werd om de learning rate te onderzoeken met behulp van de implementatie van 	Pong.
+	- Pong --> source code die gebruikt werd om de learning rate te onderzoeken met behulp van de implementatie van Pong.
